@@ -1,0 +1,56 @@
+Core Architecture
+typescriptCopyinterface FirefliesSwarm {
+  particles: FireflyParticle[];
+  synchronization: SynchronizationMetrics;
+  phaseSpace: PhaseSpace;
+}
+
+interface FireflyParticle {
+  position: Vector2D;
+  phase: number;
+  frequency: number;
+  coupling: number;
+  
+  updatePhase(neighbors: FireflyParticle[]): void;
+  pulse(): boolean;
+  synchronize(globalPhase: number): void;
+}
+Synchronization Parameters
+
+Natural Frequency: ω = 1.0 Hz (adjustable)
+Coupling Strength: K = 0.1-1.0
+Phase Response Curve: PRC(θ) = sin(θ)
+Interaction Radius: 50 units
+
+Kuramoto Model Implementation
+typescriptCopyclass FirefliesSystem {
+  private updateFirefly(f: FireflyParticle): void {
+    // Kuramoto model
+    const neighbors = this.getNeighbors(f);
+    const phaseSum = neighbors.reduce((sum, n) => {
+      return sum + Math.sin(n.phase - f.phase);
+    }, 0);
+    
+    // Update phase
+    const dθ = f.frequency + (f.coupling / neighbors.length) * phaseSum;
+    f.phase += dθ * dt;
+    
+    // Normalize phase to [0, 2π]
+    f.phase = f.phase % (2 * Math.PI);
+    
+    // Check for pulse
+    if (f.phase >= 2 * Math.PI) {
+      f.pulse();
+      f.phase = 0;
+    }
+  }
+  
+  private calculateOrderParameter(): number {
+    // Measure global synchronization
+    const sum = this.particles.reduce((acc, p) => {
+      return acc.add(new Complex(Math.cos(p.phase), Math.sin(p.phase)));
+    }, new Complex(0, 0));
+    
+    return sum.magnitude() / this.particles.length;
+  }
+}
