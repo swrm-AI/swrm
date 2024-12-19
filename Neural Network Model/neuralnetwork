@@ -1,0 +1,40 @@
+Core Architecture
+typescriptCopyinterface NeuralSwarm {
+  particles: NeuralParticle[];
+  synapticNetwork: SynapticGraph;
+  learningConfig: LearningParameters;
+}
+
+interface NeuralParticle {
+  position: Vector2D;
+  activation: number;
+  connections: Connection[];
+  weights: Float32Array;
+  bias: number;
+  
+  updateState(neighbors: NeuralParticle[]): void;
+  propagateSignal(): number;
+  adjustWeights(gradient: number): void;
+}
+Behavior Parameters
+
+Activation Function: Hyperbolic tangent (tanh)
+Learning Rate: 0.001-0.1 (adaptive)
+Connection Radius: 50-150 units
+Weight Range: [-1, 1]
+
+State Evolution
+typescriptCopyclass NeuralParticleSystem {
+  private updateParticle(p: NeuralParticle): void {
+    // Hebbian learning rule
+    const activationDelta = neighbors.reduce((sum, n) => {
+      return sum + (p.weights[n.id] * n.activation);
+    }, 0);
+    
+    // Update activation
+    p.activation = tanh(activationDelta + p.bias);
+    
+    // Adjust weights based on correlation
+    p.adjustWeights(learningRate * activationDelta);
+  }
+}
