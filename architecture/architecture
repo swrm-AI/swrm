@@ -1,0 +1,86 @@
+flowchart TB
+    subgraph Client["Client Layer"]
+        UI["UI/Visualization Layer"]
+        API["API Gateway"]
+        WSC["WebSocket Connections"]
+    end
+
+    subgraph Core["Core System"]
+        direction TB
+        PSE["Particle System Engine"]
+        SC["Swarm Controllers"]
+        NP["Neural Processing"]
+        SM["State Management"]
+    end
+
+    subgraph Models["Swarm Models"]
+        direction LR
+        subgraph NNM["Neural Network Model"]
+            NN_Grid["Grid Organization"]
+            NN_Syn["Synaptic Connections"]
+            NN_Pat["Pattern Formation"]
+        end
+        
+        subgraph QFM["Quantum Field Model"]
+            QF_State["State Transitions"]
+            QF_Ent["Entanglement Sim"]
+            QF_Wave["Wave Function"]
+        end
+        
+        subgraph CDM["Cosmic Dust Model"]
+            CD_Grav["Gravitational Fields"]
+            CD_Orb["Orbital Dynamics"]
+            CD_Harm["Harmonic Patterns"]
+        end
+        
+        subgraph FM["Fireflies Model"]
+            F_Sync["Synchronization"]
+            F_Phase["Phase Coupling"]
+            F_Pat["Pattern Generation"]
+        end
+    end
+
+    subgraph Processing["Processing Layer"]
+        PC["Particle Computing"]
+        EP["Emergence Processing"]
+        SP["Signal Processing"]
+        DP["Data Pipeline"]
+    end
+
+    subgraph Infrastructure["Infrastructure Layer"]
+        Cache["Distributed Cache"]
+        Queue["Message Queue"]
+        Store["State Store"]
+        Monitor["System Monitor"]
+    end
+
+    UI --> API
+    UI --> WSC
+    API --> PSE
+    WSC --> PSE
+
+    PSE --> SC
+    SC --> NP
+    NP --> SM
+    SM --> PSE
+
+    SC --> Models
+    NP --> Processing
+
+    Models --> Processing
+    Processing --> Infrastructure
+
+    Cache --> PSE
+    Queue --> PSE
+    Store --> SM
+    Monitor --> Core
+
+    classDef primary fill:#2374ab,stroke:#2374ab,stroke-width:2px,color:#fff
+    classDef secondary fill:#48a9a6,stroke:#48a9a6,stroke-width:2px,color:#fff
+    classDef tertiary fill:#4b4e6d,stroke:#4b4e6d,stroke-width:2px,color:#fff
+    classDef quaternary fill:#1f2041,stroke:#1f2041,stroke-width:2px,color:#fff
+
+    class Client,UI,API,WSC primary
+    class Core,PSE,SC,NP,SM secondary
+    class Models,NNM,QFM,CDM,FM tertiary
+    class Processing,Infrastructure quaternary
