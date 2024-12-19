@@ -1,3 +1,12 @@
+# SWRM System Architecture
+
+> Technical architecture documentation for the SWRM distributed intelligence system.
+
+## System Overview
+
+SWRM is built on a multi-layered architecture that enables distributed swarm computation through four specialized models. The system implements real-time particle simulation with emergent behavior patterns.
+
+```mermaid
 flowchart TB
     subgraph Client["Client Layer"]
         UI["UI/Visualization Layer"]
@@ -15,43 +24,10 @@ flowchart TB
 
     subgraph Models["Swarm Models"]
         direction LR
-        subgraph NNM["Neural Network Model"]
-            NN_Grid["Grid Organization"]
-            NN_Syn["Synaptic Connections"]
-            NN_Pat["Pattern Formation"]
-        end
-        
-        subgraph QFM["Quantum Field Model"]
-            QF_State["State Transitions"]
-            QF_Ent["Entanglement Sim"]
-            QF_Wave["Wave Function"]
-        end
-        
-        subgraph CDM["Cosmic Dust Model"]
-            CD_Grav["Gravitational Fields"]
-            CD_Orb["Orbital Dynamics"]
-            CD_Harm["Harmonic Patterns"]
-        end
-        
-        subgraph FM["Fireflies Model"]
-            F_Sync["Synchronization"]
-            F_Phase["Phase Coupling"]
-            F_Pat["Pattern Generation"]
-        end
-    end
-
-    subgraph Processing["Processing Layer"]
-        PC["Particle Computing"]
-        EP["Emergence Processing"]
-        SP["Signal Processing"]
-        DP["Data Pipeline"]
-    end
-
-    subgraph Infrastructure["Infrastructure Layer"]
-        Cache["Distributed Cache"]
-        Queue["Message Queue"]
-        Store["State Store"]
-        Monitor["System Monitor"]
+        NNM["Neural Network Model"]
+        QFM["Quantum Field Model"]
+        CDM["Cosmic Dust Model"]
+        FM["Fireflies Model"]
     end
 
     UI --> API
@@ -65,22 +41,189 @@ flowchart TB
     SM --> PSE
 
     SC --> Models
-    NP --> Processing
+```
 
-    Models --> Processing
-    Processing --> Infrastructure
+## Technical Specifications
 
-    Cache --> PSE
-    Queue --> PSE
-    Store --> SM
-    Monitor --> Core
+### Client Layer
 
-    classDef primary fill:#2374ab,stroke:#2374ab,stroke-width:2px,color:#fff
-    classDef secondary fill:#48a9a6,stroke:#48a9a6,stroke-width:2px,color:#fff
-    classDef tertiary fill:#4b4e6d,stroke:#4b4e6d,stroke-width:2px,color:#fff
-    classDef quaternary fill:#1f2041,stroke:#1f2041,stroke-width:2px,color:#fff
+```typescript
+interface ClientArchitecture {
+  visualization: {
+    engine: WebGLRenderer;
+    frameRate: number;
+    resolution: Resolution;
+  };
+  networking: {
+    restAPI: RESTClient;
+    websocket: WebSocketConnection;
+    eventBus: EventEmitter;
+  };
+}
+```
 
-    class Client,UI,API,WSC primary
-    class Core,PSE,SC,NP,SM secondary
-    class Models,NNM,QFM,CDM,FM tertiary
-    class Processing,Infrastructure quaternary
+- **Visualization Engine**
+  - WebGL 2.0 with GLSL shaders
+  - 60 FPS target rendering
+  - Adaptive resolution scaling
+  - Custom particle shaders
+
+- **Network Layer**
+  - REST/GraphQL API endpoints
+  - WebSocket protocol (RFC 6455)
+  - Binary message format
+  - Event-driven communication
+
+### Core System
+
+```typescript
+interface CoreSystem {
+  particleEngine: {
+    updateCycle: number;
+    optimization: SIMDConfig;
+    spatialIndex: QuadTree;
+  };
+  swarmControllers: {
+    behaviorStates: StateMachine;
+    parameters: DynamicParams;
+    rules: RuleEngine;
+  };
+}
+```
+
+#### Particle System Engine
+- Update frequency: 60Hz
+- SIMD optimization
+- Spatial partitioning
+- Collision detection
+- Force field computation
+
+#### Swarm Controllers
+- State machine architecture
+- Dynamic parameter adjustment
+- Rule-based behavior system
+- Real-time adaptation
+
+### Swarm Models
+
+#### Neural Network Model
+```typescript
+interface NeuralModel {
+  topology: GridTopology;
+  synapses: DynamicConnections;
+  learning: {
+    algorithm: HebbianLearning;
+    rate: number;
+    momentum: number;
+  };
+}
+```
+
+#### Quantum Field Model
+```typescript
+interface QuantumModel {
+  stateVector: ComplexVector;
+  entanglement: EntanglementMap;
+  waveFunction: SchrodingerSolver;
+}
+```
+
+#### Cosmic Dust Model
+```typescript
+interface CosmicModel {
+  gravity: GravityField;
+  orbits: OrbitalSystem;
+  harmonics: OscillationPattern;
+}
+```
+
+#### Fireflies Model
+```typescript
+interface FirefliesModel {
+  oscillators: KuramotoNetwork;
+  synchronization: PhaseController;
+  patterns: EmergentPatterns;
+}
+```
+
+### Processing Layer
+
+```typescript
+interface ProcessingLayer {
+  computation: {
+    gpu: GPUAccelerator;
+    parallel: ThreadPool;
+    vectorOps: VectorProcessor;
+  };
+  emergence: {
+    patterns: PatternDetector;
+    analysis: StateAnalyzer;
+    tracking: BehaviorTracker;
+  };
+}
+```
+
+### Infrastructure Layer
+
+```typescript
+interface Infrastructure {
+  cache: RedisCluster;
+  messageQueue: RabbitMQConfig;
+  stateStore: EtcdClient;
+  monitoring: {
+    prometheus: PrometheusConfig;
+    grafana: GrafanaDashboards;
+    alerts: AlertManager;
+  };
+}
+```
+
+## Performance Metrics
+
+- Particle update rate: 60Hz
+- Maximum particles: 1M+
+- Latency target: <16ms
+- Memory usage: 2GB baseline
+- Network bandwidth: 100Mbps peak
+
+## System Requirements
+
+### Production Environment
+- CPU: 8+ cores
+- RAM: 16GB+
+- GPU: NVIDIA RTX 2060+
+- Storage: 100GB SSD
+- Network: 1Gbps
+
+### Development Environment
+- Node.js 18+
+- TypeScript 4.5+
+- WebGL 2.0 support
+- Redis 6+
+- RabbitMQ 3.8+
+
+## Implementation Notes
+
+### Performance Optimization
+- GPU-accelerated particle computation
+- Spatial hashing for collision detection
+- Binary protocol for network communication
+- Memory pool for particle allocation
+- Batch processing for state updates
+
+### Scalability
+- Horizontal scaling via sharding
+- Load balancing across nodes
+- Distributed state management
+- Asynchronous event processing
+- Microservices architecture
+
+## Security Considerations
+
+- Access control for API endpoints
+- Data encryption in transit
+- Rate limiting for public APIs
+- Input validation
+- Secure WebSocket connections
+
+---
