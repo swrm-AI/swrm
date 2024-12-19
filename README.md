@@ -2,7 +2,7 @@
 
 ![swrm](https://github.com/user-attachments/assets/55cd2636-33a8-48aa-87f9-3473301297e8)
 
-> Distributed intelligence through swarm computation 🧠
+> Distributed intelligence through swarm computation 
 
 swrm is a decentralized AI system powered by four interconnected swarm models, delivering emergent behavior through collective computation. Like a hive mind, each model functions as a specialized node, processing and sharing information across the network.
 
@@ -108,4 +108,3 @@ x: https://x.com/swrmco
 
 ---
 
-*SWRM - Four models. One mind. Infinite emergence.* 🧠
